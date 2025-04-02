@@ -109,6 +109,3 @@ MIT License
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a pull request.
-
----
-Perplexity로부터의 답변: pplx.ai/share
