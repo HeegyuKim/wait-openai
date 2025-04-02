@@ -11,13 +11,13 @@ When working with local or self-hosted OpenAI-compatible servers, it's often nec
 ### From source
 
 ```bash
-pip install git+https://github.com/yourusername/openai-server-utils.git
+pip install git+https://github.com/HeegyuKim/wait-openai.git
 ```
 
 ### Development installation
 
 ```bash
-git clone https://github.com/yourusername/openai-server-utils.git
+git clone https://github.com/HeegyuKim/wait-openai.git
 cd openai-server-utils
 pip install -e .
 ```
