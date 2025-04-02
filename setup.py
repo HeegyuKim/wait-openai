@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="openai-server-utils",
+    name="wait-openai",
     version="0.1.0",
     description="An utility for the OpenAI compatible server.",
     author="OpenAI Utils",
@@ -12,7 +12,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "wait_openai=openai_server_utils:main",
+            "wait-openai=openai_server_utils:main",
         ],
     },
     classifiers=[
