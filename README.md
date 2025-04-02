@@ -1,4 +1,4 @@
-# OpenAI Server Utils
+# Wait OpenAI Server Utils
 
 A Python utility to wait for OpenAI-compatible API servers to become ready before proceeding with tasks.
 
