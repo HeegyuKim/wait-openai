@@ -28,16 +28,16 @@ pip install -e .
 
 ```bash
 # Basic usage - wait for server to be ready
-wait_openai http://localhost:9090/v1
+wait-openai http://localhost:9090/v1
 
 # With custom timeout (in seconds)
-wait_openai http://localhost:9090/v1 --timeout 600
+wait-openai http://localhost:9090/v1 --timeout 600
 
 # With custom check interval (in seconds)
-wait_openai http://localhost:9090/v1 --check-interval 2.0
+wait-openai http://localhost:9090/v1 --check-interval 2.0
 
 # Silent mode (no status messages)
-wait_openai http://localhost:9090/v1 --quiet
+wait-openai http://localhost:9090/v1 --quiet
 ```
 
 ### Python API usage
@@ -72,7 +72,7 @@ This utility is designed to work in automation scripts and workflows:
 run_openai_server_in_background localhost:9090
 
 # Wait for the server to become ready
-wait_openai http://localhost:9090/v1
+wait-openai http://localhost:9090/v1
 
 # Start using the server for predictions
 start_prediction
