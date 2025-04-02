@@ -8,23 +8,23 @@ import time
 def wait_for_openai_server(url: str, timeout: int = 300, check_interval: float = 1.0, 
                           verbose: bool = True) -> bool:
     """
-    OpenAI 호환 서버가 준비될 때까지 대기합니다.
+    Wait for an OpenAI-compatible server to be ready.
     
     Args:
-        url: OpenAI 호환 서버의 기본 URL (예: 'http://localhost:9090/v1')
-        timeout: 최대 대기 시간(초)
-        check_interval: 초기 확인 간격(초)
-        verbose: 상태 메시지 출력 여부
+        url (str): URL of the OpenAI-compatible server
+        timeout (int): Maximum waiting time in seconds (default: 300)
+        check_interval (float): Initial check interval in seconds (default: 1.0)
+        verbose (bool): Print status messages if True (default: True)
         
     Returns:
-        bool: 서버가 준비되면 True, 타임아웃에 도달하면 False
+        bool: True if the server is ready, False otherwise
     """
     start_time = time.time()
     health_url = url.rstrip('/') + '/health/ready'
     models_url = url.rstrip('/') + '/models'
     
     if verbose:
-        print(f"OpenAI 호환 서버({url})가 준비될 때까지 대기 중...")
+        print(f"Wating for the server to be ready: {url}")
     
     max_backoff = 30  # 최대 백오프 시간(초)
     
@@ -35,7 +35,7 @@ def wait_for_openai_server(url: str, timeout: int = 300, check_interval: float =
                 response = requests.get(health_url, timeout=5)
                 if response.status_code == 200:
                     if verbose:
-                        print(f"서버가 준비되었습니다! 상태 확인 성공.")
+                        print(f"Server is ready! Health endpoint is accessible.")
                     return True
             except requests.RequestException:
                 # Health 엔드포인트를 사용할 수 없는 경우, models 엔드포인트 시도
@@ -45,12 +45,12 @@ def wait_for_openai_server(url: str, timeout: int = 300, check_interval: float =
             response = requests.get(models_url, timeout=5)
             if response.status_code == 200:
                 if verbose:
-                    print(f"서버가 준비되었습니다! Models 엔드포인트 접근 가능.")
+                    print(f"Server is ready! Models endpoint is accessible.")
                 return True
                 
         except requests.RequestException as e:
             if verbose:
-                print(f"서버가 아직 준비되지 않았습니다: {str(e)}")
+                print(f"Server is not ready yet: {str(e)}")
             
         # 지터를 사용한 지수 백오프
         jitter = random.uniform(0, 0.5)
@@ -58,7 +58,7 @@ def wait_for_openai_server(url: str, timeout: int = 300, check_interval: float =
         
         if verbose:
             elapsed = time.time() - start_time
-            print(f"대기 중... (경과: {elapsed:.1f}초, 다음 확인까지 {sleep_time:.1f}초)")
+            print(f"Wating... (Elapsed: {elapsed:.1f} sec, Next check in {sleep_time:.1f} sec)")
             
         time.sleep(sleep_time)
         
@@ -66,20 +66,20 @@ def wait_for_openai_server(url: str, timeout: int = 300, check_interval: float =
         check_interval = min(check_interval * 1.5, max_backoff)
     
     if verbose:
-        print(f"{timeout}초 후 타임아웃에 도달했습니다. 서버가 준비되지 않았을 수 있습니다.")
+        print(f"Timeout reached after {timeout} seconds. The server may not be ready.")
     
     return False
 
 
 def main():
-    parser = argparse.ArgumentParser(description="OpenAI 호환 서버가 준비될 때까지 대기")
-    parser.add_argument("url", type=str, help="OpenAI 호환 서버의 URL")
+    parser = argparse.ArgumentParser(description="Wait for an OpenAI-compatible server to be ready")
+    parser.add_argument("url", type=str, help="URL of the OpenAI-compatible server")
     parser.add_argument("--timeout", type=int, default=300, 
-                        help="최대 대기 시간(초) (기본값: 300)")
+                        help="Maximum waiting time in seconds (default: 300)")
     parser.add_argument("--check-interval", type=float, default=1.0,
-                        help="초기 확인 간격(초) (기본값: 1.0)")
+                        help="Initial check interval in seconds (default: 1.0)")
     parser.add_argument("--quiet", action="store_true", 
-                        help="상태 메시지 출력 안 함")
+                        help="Do not print status messages")
     
     args = parser.parse_args()
     
